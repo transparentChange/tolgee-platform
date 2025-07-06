@@ -9,7 +9,7 @@ on:
     - cron: '0 5 * * 1'  # Every Monday
 
 jobs:
-  gradle:
+  snyk:
     name: Snyk Gradle Scan
     runs-on: ubuntu-latest
     steps:
@@ -24,27 +24,6 @@ jobs:
         run: npm install -g snyk
       
       - name: Run Snyk on Gradle
-        run: snyk monitor --file=build.gradle --all-sub-projects
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-  npm:
-    name: Snyk npm Scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Snyk CLI
-        run: npm install -g snyk
-
-      - name: Run Snyk monitor for npm projects
-        run: snyk monitor --all-projects --package-manager=npm
+        run: snyk monitor --sub-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
