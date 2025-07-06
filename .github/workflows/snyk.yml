@@ -38,11 +38,13 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      - uses: snyk/actions/node@master
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Run Snyk monitor for npm projects
+        run: snyk monitor --all-projects --package-manager=npm
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
-          args: --all-projects
