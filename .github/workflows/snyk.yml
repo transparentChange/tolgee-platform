@@ -20,12 +20,13 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - uses: snyk/actions/gradle@master
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+      
+      - name: Run Snyk on Gradle
+        run: snyk monitor --file=build.gradle --all-sub-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
-          args: --file=build.gradle --all-sub-projects
 
   npm:
     name: Snyk npm Scan
