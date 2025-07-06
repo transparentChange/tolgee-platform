@@ -24,7 +24,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: monitor  # Use `test` to fail PRs on issues
+          command: monitor
+          args: --file=build.gradle --all-sub-projects
 
   npm:
     name: Snyk npm Scan
